@@ -2,7 +2,7 @@
 
 import 'package:chat_app_firebase/helper/helper_functions.dart';
 import 'package:chat_app_firebase/screens/home_page.dart';
-import 'package:chat_app_firebase/screens/login_page.dart';
+import 'package:chat_app_firebase/screens/auth/login_page.dart';
 import 'package:chat_app_firebase/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
