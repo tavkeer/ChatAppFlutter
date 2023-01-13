@@ -1,66 +1,35 @@
-// ignore_for_file: prefer_const_constructors,prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors
 
-import 'dart:math';
-
-import 'package:chat_app_firebase/helper/helper_functions.dart';
 import 'package:chat_app_firebase/screens/auth/login_page.dart';
-import 'package:chat_app_firebase/screens/profile_page.dart';
-import 'package:chat_app_firebase/screens/search_page.dart';
+import 'package:chat_app_firebase/screens/home_page.dart';
 import 'package:chat_app_firebase/services/auth_services.dart';
 import 'package:chat_app_firebase/shared/constants.dart';
 import 'package:chat_app_firebase/widgets/widgets.dart';
+
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ProfilePage extends StatefulWidget {
+  final String userName;
+  final String email;
+  const ProfilePage({super.key, required this.userName, required this.email});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  String userName = "";
-  String email = "";
-
-  AuthService authService = AuthService();
-
-  @override
-  void initState() {
-    gettingUserData();
-    super.initState();
-  }
-
-  gettingUserData() async {
-    await HelperFunctions.getUserNameFromSF().then((value) {
-      setState(() {
-        userName = value!;
-      });
-    });
-    await HelperFunctions.getUserEmailFromSF().then((value) {
-      setState(() {
-        email = value!;
-      });
-    });
-  }
-
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         backgroundColor: primaryColor,
         elevation: 0,
-        actions: [
-          IconButton(
-              onPressed: () {
-                nextScreen(context, SearchPage());
-              },
-              icon: Icon(Icons.search))
-        ],
         title: Text(
-          "Groups",
-          style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+          "Profile",
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
         ),
+        centerTitle: true,
       ),
       drawer: Drawer(
         child: ListView(
@@ -75,7 +44,7 @@ class _HomePageState extends State<HomePage> {
               height: 15,
             ),
             Text(
-              userName,
+              widget.userName,
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
@@ -87,9 +56,11 @@ class _HomePageState extends State<HomePage> {
               color: Colors.black45,
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                nextScreenReplacement(context, HomePage());
+              },
               selectedColor: primaryColor,
-              selected: true,
+              selected: false,
               contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               leading: Icon(
                 Icons.group,
@@ -100,16 +71,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              onTap: () {
-                nextScreen(
-                    context,
-                    ProfilePage(
-                      userName: userName,
-                      email: email,
-                    ));
-              },
+              onTap: () {},
               selectedColor: primaryColor,
-              selected: false,
+              selected: true,
               contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               leading: Icon(
                 Icons.person,
@@ -141,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                                   )),
                               IconButton(
                                   onPressed: () async {
-                                    await authService
+                                    await AuthService()
                                         .signout()
                                         .whenComplete(() {
                                       Navigator.pushAndRemoveUntil(
