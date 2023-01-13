@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "87894214531",
+    "project_id": "groupchatflutter-8f1ca",
+    "storage_bucket": "groupchatflutter-8f1ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87894214531:android:3950950835452b554258b6",
+        "android_client_info": {
+          "package_name": "com.tavkeer.chat_app_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87894214531-kdr3k05bk6bfg2s8bd5i2fmfvqsltmsj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tavkeer.chat_app_firebase",
+            "certificate_hash": "5fd774d6c50a4fb8bac4e87845365e21df5ab635"
+          }
+        },
+        {
+          "client_id": "87894214531-e2nrrr7j4mqt3a80jq2qq4a1k80ia01r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChQQsdHlFt2LaQObtgOxWbCQhXWMx-zcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87894214531-e2nrrr7j4mqt3a80jq2qq4a1k80ia01r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
