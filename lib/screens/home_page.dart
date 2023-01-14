@@ -7,8 +7,11 @@ import 'package:chat_app_firebase/screens/auth/login_page.dart';
 import 'package:chat_app_firebase/screens/profile_page.dart';
 import 'package:chat_app_firebase/screens/search_page.dart';
 import 'package:chat_app_firebase/services/auth_services.dart';
+import 'package:chat_app_firebase/services/database_services.dart';
 import 'package:chat_app_firebase/shared/constants.dart';
+import 'package:chat_app_firebase/widgets/group_tile.dart';
 import 'package:chat_app_firebase/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,8 +22,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Stream? groups;
   String userName = "";
   String email = "";
+  bool isloading = false;
+  String groupName = "";
 
   AuthService authService = AuthService();
 
@@ -28,6 +34,15 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     gettingUserData();
     super.initState();
+  }
+
+  //String manuplation
+  String getId(String res) {
+    return res.substring(0, res.indexOf("_"));
+  }
+
+  String getName(String res) {
+    return res.substring(res.indexOf("_") + 1);
   }
 
   gettingUserData() async {
@@ -39,6 +54,14 @@ class _HomePageState extends State<HomePage> {
     await HelperFunctions.getUserEmailFromSF().then((value) {
       setState(() {
         email = value!;
+      });
+    });
+    //getting the list of snapshots in our stream
+    await DatabaseServices(uid: FirebaseAuth.instance.currentUser!.uid)
+        .getUserGroups()
+        .then((snapshot) {
+      setState(() {
+        groups = snapshot;
       });
     });
   }
@@ -53,7 +76,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                nextScreen(context, SearchPage());
+                nextScreenReplacement(context, SearchPage());
               },
               icon: Icon(Icons.search))
         ],
@@ -176,6 +199,161 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      body: groupList(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => popUpDialog(context),
+        backgroundColor: primaryColor,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30,
+        ),
+      ),
     );
+  }
+
+  groupList() {
+    return StreamBuilder(
+      stream: groups,
+      builder: (context, AsyncSnapshot snapshot) {
+        //before returning make some checks
+        if (snapshot.hasData) {
+          if (snapshot.data["groups"] != null) {
+            if (snapshot.data["groups"].length != 0) {
+              return ListView.builder(
+                  itemCount: snapshot.data["groups"].length,
+                  itemBuilder: (context, index) {
+                    return GroupTile(
+                        groueName: getName(snapshot.data["groups"][index]),
+                        groupId: getId(snapshot.data["groups"][index]),
+                        userName: snapshot.data["fullName"]);
+                  });
+            } else {
+              return noGroupWidget(context);
+            }
+          } else {
+            return noGroupWidget(context);
+          }
+        } else {
+          return CircularProgressIndicator(
+            color: primaryColor,
+            backgroundColor: Colors.grey,
+          );
+        }
+      },
+    );
+  }
+
+  popUpDialog(BuildContext context) {
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            title: Text(
+              "Create a group",
+              textAlign: TextAlign.center,
+            ),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              isloading
+                  ? CircularProgressIndicator(
+                      backgroundColor: primaryColor,
+                    )
+                  : TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          groupName = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
+                              borderRadius: BorderRadius.circular(30)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
+                              borderRadius: BorderRadius.circular(30)),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
+                              borderRadius: BorderRadius.circular(30))),
+                    ),
+            ]),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30))),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "CANCEL",
+                      style: TextStyle(),
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30))),
+                    onPressed: () async {
+                      if (groupName != "") {
+                        setState(() {
+                          isloading = true;
+                        });
+                        DatabaseServices(
+                                uid: FirebaseAuth.instance.currentUser!.uid)
+                            .createGroup(
+                                userName,
+                                FirebaseAuth.instance.currentUser!.uid,
+                                groupName)
+                            .whenComplete(() {
+                          isloading = false;
+                        });
+                        Navigator.of(context).pop();
+                        showSnackBar(context, Colors.green,
+                            "Group created successfully");
+                      }
+                    },
+                    child: Text(
+                      "CREATE",
+                      style: TextStyle(),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          );
+        });
+  }
+
+  noGroupWidget(BuildContext context) {
+    return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.add_circle,
+                  color: Colors.grey[700],
+                  size: 75,
+                ),
+                onPressed: () => popUpDialog(context),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Text(
+                "You have not joined any group Yet!!!",
+                style: TextStyle(fontSize: 18),
+              )
+            ]));
   }
 }

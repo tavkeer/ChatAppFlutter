@@ -30,7 +30,7 @@ class HelperFunctions {
 
   static Future<String?> getUserEmailFromSF() async {
     SharedPreferences sf = await SharedPreferences.getInstance();
-    return sf.getString(userNameKey);
+    return sf.getString(userEmailKey);
   }
 
   static Future<String?> getUserNameFromSF() async {
