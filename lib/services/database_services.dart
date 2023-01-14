@@ -60,4 +60,25 @@ class DatabaseServices {
           FieldValue.arrayUnion(["${groupDocumentReference.id}_${groupName}"]),
     });
   }
+
+  //getchats
+  getChats(String groupId) async {
+    return groupCollection
+        .doc(groupId)
+        .collection("messages")
+        .orderBy("time")
+        .snapshots();
+  }
+
+  //get group admin
+  Future getGroupAdmin(String groupid) async {
+    DocumentReference d = groupCollection.doc(groupid);
+    DocumentSnapshot documentSnapshot = await d.get();
+    return documentSnapshot["groupAdmin"];
+  }
+
+  //get members
+  getGroupMembers(String groupId) async {
+    return groupCollection.doc(groupId).snapshots();
+  }
 }
