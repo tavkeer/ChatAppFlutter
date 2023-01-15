@@ -81,4 +81,9 @@ class DatabaseServices {
   getGroupMembers(String groupId) async {
     return groupCollection.doc(groupId).snapshots();
   }
+
+  //search by name
+  searchByName(String groupName) async {
+    return groupCollection.where("groupName", isEqualTo: groupName).get();
+  }
 }
