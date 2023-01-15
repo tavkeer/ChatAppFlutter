@@ -138,7 +138,7 @@ class _ChatPageState extends State<ChatPage> {
                   itemBuilder: (context, index) {
                     return MessageTile(
                         message: snapshot.data.docs[index]['message'],
-                        sendByMe: widget.userName ==
+                        sentByMe: widget.userName ==
                             snapshot.data.docs[index]['sender'],
                         sender: snapshot.data.docs[index]['sender']);
                   })
