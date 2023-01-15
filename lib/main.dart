@@ -6,10 +6,23 @@ import 'package:chat_app_firebase/screens/auth/login_page.dart';
 import 'package:chat_app_firebase/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  if (kIsWeb) {
+    //run web app
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+            apiKey: "AIzaSyAa7xfHdSewKyfbbds_4wbBKQnJZTsKEcA",
+            appId: "1:87894214531:web:01de8bde4814ce674258b6",
+            messagingSenderId: "87894214531",
+            projectId: "groupchatflutter-8f1ca"));
+  } else {
+    //run for ios or android
+    await Firebase.initializeApp();
+  }
+
   runApp(const MyApp());
 }
 

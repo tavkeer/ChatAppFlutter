@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors,prefer_const_literals_to_create_immutables
 
-import 'dart:math';
-
 import 'package:chat_app_firebase/helper/helper_functions.dart';
 import 'package:chat_app_firebase/screens/auth/login_page.dart';
 import 'package:chat_app_firebase/screens/profile_page.dart';

@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors,
 
+import 'package:chat_app_firebase/screens/home_page.dart';
+import 'package:chat_app_firebase/services/auth_services.dart';
 import 'package:chat_app_firebase/services/database_services.dart';
 import 'package:chat_app_firebase/shared/constants.dart';
+import 'package:chat_app_firebase/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +60,53 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
           backgroundColor: primaryColor,
           elevation: 0,
           actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.exit_to_app))
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("EXIT"),
+                          content:
+                              Text("Are you sure you want to Exit the group?"),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    icon: Icon(
+                                      Icons.cancel,
+                                      color: Colors.red,
+                                    )),
+                                IconButton(
+                                    onPressed: () async {
+                                      await DatabaseServices(
+                                              uid: FirebaseAuth
+                                                  .instance.currentUser!.uid)
+                                          .toggleGroupJoin(
+                                              getName(widget.adminName),
+                                              widget.groupId,
+                                              widget.groueName)
+                                          .whenComplete(() {
+                                        nextScreenReplacement(
+                                            context, HomePage());
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.done,
+                                      color: Colors.green,
+                                    ))
+                              ],
+                            ),
+                          ],
+                        );
+                      });
+                },
+                icon: Icon(Icons.exit_to_app))
           ],
         ),
         body: Container(

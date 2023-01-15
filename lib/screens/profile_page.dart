@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors,prefer_const_literals_to_create_immutables
 
-import 'package:chat_app_firebase/main.dart';
 import 'package:chat_app_firebase/screens/auth/login_page.dart';
 import 'package:chat_app_firebase/screens/home_page.dart';
 import 'package:chat_app_firebase/services/auth_services.dart';
+import 'package:chat_app_firebase/services/database_services.dart';
 import 'package:chat_app_firebase/shared/constants.dart';
 import 'package:chat_app_firebase/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 
@@ -108,16 +110,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                     )),
                                 IconButton(
                                     onPressed: () async {
-                                      await AuthService()
-                                          .signout()
-                                          .whenComplete(() {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginPage()),
-                                            (route) => false);
-                                      });
+                                      await AuthService().signout();
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LoginPage()),
+                                          (route) => false);
                                     },
                                     icon: Icon(
                                       Icons.done,
