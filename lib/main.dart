@@ -14,10 +14,10 @@ void main() async {
     //run web app
     await Firebase.initializeApp(
         options: FirebaseOptions(
-            apiKey: "AIzaSyAa7xfHdSewKyfbbds_4wbBKQnJZTsKEcA",
-            appId: "1:87894214531:web:01de8bde4814ce674258b6",
-            messagingSenderId: "87894214531",
-            projectId: "groupchatflutter-8f1ca"));
+            apiKey: "Your-own-API-key",
+            appId: "Your-own-App_Id",
+            messagingSenderId: "Your-own-MessagingSenderId",
+            projectId: "Your-own-ProjectId"));
   } else {
     //run for ios or android
     await Firebase.initializeApp();
