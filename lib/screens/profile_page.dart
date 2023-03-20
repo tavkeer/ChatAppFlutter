@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors,prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:chat_app_firebase/screens/auth/login_page.dart';
-import 'package:chat_app_firebase/screens/home_page.dart';
+import 'package:chat_app_firebase/screens/homePage/home_page.dart';
 import 'package:chat_app_firebase/services/auth_services.dart';
 import 'package:chat_app_firebase/shared/constants.dart';
 import 'package:chat_app_firebase/widgets/widgets.dart';

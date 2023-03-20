@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:chat_app_firebase/screens.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -47,15 +45,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Groupie",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Text(
+                      const Text(
                         "Create your account to chat and explore!",
                         style: TextStyle(
                           fontSize: 15,
@@ -66,11 +64,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
                       //full name field
                       CustomNameField(nameController: nameController),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
 
                       //email field
                       CustomEmailField(emailController: emailController),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
 
                       //password field
                       CustomPasswordField(
@@ -79,19 +77,19 @@ class _RegisterPageState extends State<RegisterPage> {
                         hidePassword: hidePass,
                         hidePasswordColor: hidePassColor,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       //toggle Registration Screen
                       CustomButton(text: "Resgister", ontap: register),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
 
                       //toggle Registration
-                      ToggleLoginRegisterPage(
+                      const ToggleLoginRegisterPage(
                         leadingText: "Already have an Account  ",
                         buttonText: "Login!",
-                        nextPage: const LoginPage(),
+                        nextPage: LoginPage(),
                       ),
                     ],
                   ),
@@ -103,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   //to avoid build context error
   void nextScreen() {
-    nextScreenReplacement(context, HomePage());
+    nextScreenReplacement(context, const HomePage());
   }
 
   //toggle hide password

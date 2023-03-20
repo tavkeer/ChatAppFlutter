@@ -1,5 +1,5 @@
 export 'package:chat_app_firebase/helper/helper_functions.dart';
-export 'package:chat_app_firebase/screens/home_page.dart';
+export 'package:chat_app_firebase/screens/homePage/home_page.dart';
 export 'package:chat_app_firebase/screens/auth/login_page.dart';
 export 'package:chat_app_firebase/shared/constants.dart';
 export 'package:flutter/material.dart';
@@ -17,3 +17,7 @@ export 'package:chat_app_firebase/screens/auth/components/custom_passwordfield.d
 export 'package:chat_app_firebase/screens/auth/components/toggle_registration.dart';
 export 'package:chat_app_firebase/screens/auth/components/custom_button.dart';
 export 'package:chat_app_firebase/screens/auth/components/custom_namefield.dart';
+export 'package:chat_app_firebase/screens/profile_page.dart';
+export 'package:chat_app_firebase/screens/search_page.dart';
+export 'package:chat_app_firebase/widgets/group_tile.dart';
+export 'package:chat_app_firebase/screens/homePage/components/custom_drawerwidget.dart';
