@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:chat_app_firebase/helper/helper_functions.dart';
 import 'package:chat_app_firebase/screens/chat_page.dart';

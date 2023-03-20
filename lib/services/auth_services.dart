@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  static final String user = FirebaseAuth.instance.currentUser!.uid;
 
   //register function
   Future registerUserWithEmailAndPassord(

@@ -2,8 +2,8 @@ import 'screens.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //initializing Firebase for particular device
   getDevice();
-
   runApp(const MyApp());
 }
 
@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  //function for checking loggin status
   void getLoggedInStatus() {
     HelperFunctions.getUserLoggedInStatus().then(
       (value) {
@@ -46,6 +47,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+//checking device compatibility
 getDevice() async {
   if (kIsWeb) {
     //run web app
