@@ -1,27 +1,8 @@
-// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
-
-import 'package:chat_app_firebase/helper/helper_functions.dart';
-import 'package:chat_app_firebase/screens/home_page.dart';
-import 'package:chat_app_firebase/screens/auth/login_page.dart';
-import 'package:chat_app_firebase/shared/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
+import 'screens.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
-    //run web app
-    await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: "Your-own-API-key",
-            appId: "Your-own-App_Id",
-            messagingSenderId: "Your-own-MessagingSenderId",
-            projectId: "Your-own-ProjectId"));
-  } else {
-    //run for ios or android
-    await Firebase.initializeApp();
-  }
+  getDevice();
 
   runApp(const MyApp());
 }
@@ -34,16 +15,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isSignedIn = false;
+  //letting user signed in
+  late bool _isSignedIn;
   @override
   void initState() {
-    HelperFunctions.getUserLoggedInStatus().then((value) {
-      if (value != null) {
-        setState(() {
-          _isSignedIn = value;
-        });
-      }
-    });
+    getLoggedInStatus();
     super.initState();
   }
 
@@ -51,10 +27,38 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primaryColor: primaryColor,
-          scaffoldBackgroundColor: Colors.grey[200]),
+        primaryColor: primaryColor,
+        scaffoldBackgroundColor: Colors.grey.shade200,
+      ),
       debugShowCheckedModeBanner: false,
-      home: (_isSignedIn) ? HomePage() : LoginPage(),
+      home: _isSignedIn ? const HomePage() : const LoginPage(),
     );
+  }
+
+  void getLoggedInStatus() {
+    HelperFunctions.getUserLoggedInStatus().then(
+      (value) {
+        if (value != null) {
+          setState(() => _isSignedIn = value);
+        }
+      },
+    );
+  }
+}
+
+getDevice() async {
+  if (kIsWeb) {
+    //run web app
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "Your-own-API-key",
+        appId: "Your-own-App_Id",
+        messagingSenderId: "Your-own-MessagingSenderId",
+        projectId: "Your-own-ProjectId",
+      ),
+    );
+  } else {
+    //run for ios or android
+    await Firebase.initializeApp();
   }
 }

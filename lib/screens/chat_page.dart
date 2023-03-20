@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:ui';
-
 import 'package:chat_app_firebase/screens/group_info.dart';
 import 'package:chat_app_firebase/services/database_services.dart';
 import 'package:chat_app_firebase/shared/constants.dart';

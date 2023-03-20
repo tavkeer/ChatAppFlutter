@@ -1,6 +1,4 @@
-// ignore_for_file: prefer_const_constructors,prefer_const_literals_to_create_immutables, use_build_context_synchronously
-
-import 'dart:math';
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:chat_app_firebase/helper/helper_functions.dart';
 import 'package:chat_app_firebase/screens/auth/register_page.dart';
@@ -39,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: (isLoading)
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   backgroundColor: primaryColor,
                   color: Colors.grey,
@@ -55,15 +53,15 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Groupie",
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(
+                          const Text(
                             "Login now to see what they are talking",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w400),
@@ -85,16 +83,16 @@ class _LoginPageState extends State<LoginPage> {
                                   : "Please enter a valid email";
                             },
                             decoration: textinputdecoration.copyWith(
-                                label: Text(
+                                label: const Text(
                                   "Email",
                                   style: TextStyle(),
                                 ),
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.email,
                                   color: primaryColor,
                                 )),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
 
@@ -114,11 +112,11 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             obscureText: hidePassword,
                             decoration: textinputdecoration.copyWith(
-                                label: Text(
+                                label: const Text(
                                   "Password",
                                   style: TextStyle(),
                                 ),
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.lock,
                                   color: primaryColor,
                                 ),
@@ -139,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                 )),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           SizedBox(
@@ -154,12 +152,12 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () {
                                     login();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Sign In",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16),
                                   ))),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Text.rich(
@@ -167,18 +165,19 @@ class _LoginPageState extends State<LoginPage> {
                               children: <TextSpan>[
                                 TextSpan(
                                     text: ' Register Here!',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: primaryColor,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        nextScreen(context, RegisterPage());
+                                        nextScreen(
+                                            context, const RegisterPage());
                                       })
                               ],
                               text: "Don't have an account?",
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.black),
                             ),
                           )
                         ],
@@ -205,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
           await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(email);
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
-          nextScreenReplacement(context, HomePage());
+          nextScreenReplacement(context, const HomePage());
         } else {
           showSnackBar(context, Colors.red.shade400, value);
           setState(() {

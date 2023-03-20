@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
 import 'package:chat_app_firebase/screens/chat_page.dart';
 import 'package:chat_app_firebase/shared/constants.dart';
