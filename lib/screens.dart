@@ -16,3 +16,4 @@ export 'package:chat_app_firebase/screens/auth/components/custom_emailfield.dart
 export 'package:chat_app_firebase/screens/auth/components/custom_passwordfield.dart';
 export 'package:chat_app_firebase/screens/auth/components/toggle_registration.dart';
 export 'package:chat_app_firebase/screens/auth/components/custom_button.dart';
+export 'package:chat_app_firebase/screens/auth/components/custom_namefield.dart';

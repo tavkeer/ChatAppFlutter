@@ -9,8 +9,7 @@ class AuthService {
   static final String user = FirebaseAuth.instance.currentUser!.uid;
 
   //register function
-  Future registerUserWithEmailAndPassord(
-      String fullName, String email, String password) async {
+  Future registerUser(String fullName, String email, String password) async {
     try {
       User user = (await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: password))
@@ -28,7 +27,7 @@ class AuthService {
   }
 
   //login function
-  Future loggInWithUserNameAndPassord(String email, String password) async {
+  Future loginUser(String email, String password) async {
     try {
       User user = (await firebaseAuth.signInWithEmailAndPassword(
               email: email, password: password))

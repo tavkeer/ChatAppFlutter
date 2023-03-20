@@ -1,7 +1,15 @@
 import 'package:chat_app_firebase/screens.dart';
 
 class ToggleLoginRegisterPage extends StatelessWidget {
-  const ToggleLoginRegisterPage({super.key});
+  final String leadingText;
+  final String buttonText;
+  final dynamic nextPage;
+  const ToggleLoginRegisterPage({
+    Key? key,
+    required this.leadingText,
+    required this.buttonText,
+    required this.nextPage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,22 +17,17 @@ class ToggleLoginRegisterPage extends StatelessWidget {
       TextSpan(
         children: <TextSpan>[
           TextSpan(
-            text: ' Register Here!',
+            text: buttonText,
             style: const TextStyle(
               color: primaryColor,
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
             recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                nextScreen(
-                  context,
-                  const RegisterPage(),
-                );
-              },
+              ..onTap = () => nextScreen(context, nextPage),
           )
         ],
-        text: "Don't have an account?",
+        text: leadingText,
         style: const TextStyle(
           fontSize: 14,
           color: Colors.black,

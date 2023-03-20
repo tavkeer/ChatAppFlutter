@@ -77,7 +77,11 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 15),
 
                       //Registration toggle
-                      const ToggleLoginRegisterPage()
+                      const ToggleLoginRegisterPage(
+                        leadingText: "Don't have an account ",
+                        buttonText: "Register!",
+                        nextPage: RegisterPage(),
+                      )
                     ],
                   ),
                 ),
@@ -98,8 +102,7 @@ class _LoginPageState extends State<LoginPage> {
     if (formkey.currentState!.validate()) {
       setState(() => isLoading = true);
       await AuthService()
-          .loggInWithUserNameAndPassord(
-              emailController.text, passwordController.text)
+          .loginUser(emailController.text, passwordController.text)
           .then(
         (value) async {
           if (value == true) {
