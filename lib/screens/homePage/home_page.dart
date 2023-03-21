@@ -43,7 +43,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      drawer: CustomNavigationDrawer(userName: userName, email: email),
+      drawer: CustomNavigationDrawer(
+        userName: userName,
+        email: email,
+        groups: true,
+      ),
       body: groupList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => popUpDialog(context),
@@ -125,109 +129,121 @@ class _HomePageState extends State<HomePage> {
 
   popUpDialog(BuildContext context) {
     showDialog(
-        barrierDismissible: true,
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            title: const Text(
-              "Create a group",
-              textAlign: TextAlign.center,
+      barrierDismissible: true,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              12,
             ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                isloading
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: primaryColor,
-                        ),
-                      )
-                    : TextField(
-                        onChanged: (value) {
-                          setState(() => groupName = value);
-                        },
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: primaryColor,
-                            ),
-                            borderRadius: BorderRadius.circular(
-                              30,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: primaryColor,
-                            ),
-                            borderRadius: BorderRadius.circular(
-                              30,
-                            ),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: primaryColor,
-                            ),
-                            borderRadius: BorderRadius.circular(
-                              30,
-                            ),
-                          ),
-                        ),
+          ),
+          title: const Text(
+            "Create a group",
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              isloading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: primaryColor,
                       ),
-              ],
-            ),
-            actions: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          30,
+                    )
+                  : TextField(
+                      onChanged: (value) {
+                        setState(() => groupName = value);
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: primaryColor,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                            30,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: primaryColor,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                            30,
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: primaryColor,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                            30,
+                          ),
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text(
-                      "CANCEL",
-                      style: TextStyle(),
+            ],
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        30,
+                      ),
                     ),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30))),
-                    onPressed: () async {
-                      if (groupName != "") {
-                        setState(() => isloading = true);
-                        DatabaseServices(
-                                uid: FirebaseAuth.instance.currentUser!.uid)
-                            .createGroup(
-                                userName,
-                                FirebaseAuth.instance.currentUser!.uid,
-                                groupName)
-                            .whenComplete(() => isloading = false);
-                        Navigator.of(context).pop();
-                        showSnackBar(context, Colors.green,
-                            "Group created successfully");
-                      }
-                    },
-                    child: const Text(
-                      "CREATE",
-                      style: TextStyle(),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    "CANCEL",
+                    style: TextStyle(),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        30,
+                      ),
                     ),
-                  )
-                ],
-              ),
-            ],
-          );
-        });
+                  ),
+                  onPressed: () async {
+                    if (groupName != "") {
+                      setState(() => isloading = true);
+                      DatabaseServices(
+                        uid: FirebaseAuth.instance.currentUser!.uid,
+                      )
+                          .createGroup(userName,
+                              FirebaseAuth.instance.currentUser!.uid, groupName)
+                          .whenComplete(
+                            () => isloading = false,
+                          );
+                      Navigator.of(context).pop();
+                      showSnackBar(
+                        context,
+                        Colors.green,
+                        "Group created successfully",
+                      );
+                    }
+                  },
+                  child: const Text(
+                    "CREATE",
+                    style: TextStyle(),
+                  ),
+                )
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 
   noGroupWidget(BuildContext context) {

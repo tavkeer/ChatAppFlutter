@@ -3,13 +3,13 @@ import 'package:chat_app_firebase/screens.dart';
 class CustomNavigationDrawer extends StatelessWidget {
   const CustomNavigationDrawer({
     Key? key,
-    this.groups,
-    this.profile,
+    this.groups = false,
+    this.profile = false,
     required this.userName,
     required this.email,
   }) : super(key: key);
-  final bool? groups;
-  final bool? profile;
+  final bool groups;
+  final bool profile;
   final String userName;
   final String email;
 
@@ -43,9 +43,11 @@ class CustomNavigationDrawer extends StatelessWidget {
             color: Colors.black45,
           ),
           ListTile(
-            onTap: () {},
+            onTap: () => (!groups)
+                ? nextScreenReplacement(context, const HomePage())
+                : null,
             selectedColor: primaryColor,
-            selected: groups ?? false,
+            selected: groups,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             leading: const Icon(
@@ -57,12 +59,14 @@ class CustomNavigationDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () => nextScreen(
-              context,
-              ProfilePage(userName: userName, email: email),
-            ),
+            onTap: () => (!profile)
+                ? nextScreenReplacement(
+                    context,
+                    ProfilePage(userName: userName, email: email),
+                  )
+                : null,
             selectedColor: primaryColor,
-            selected: profile ?? false,
+            selected: profile,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             leading: const Icon(
@@ -118,8 +122,7 @@ popUp(BuildContext context) {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
-                          ),
+                              builder: (context) => const LoginPage()),
                           (route) => false);
                     },
                   );
