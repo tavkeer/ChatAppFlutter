@@ -8,12 +8,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //stream data from firebase for the groups the user is added to
   Stream? groups;
+
+  //username of current user
   String userName = "";
+
+  //email of current user
   String email = "";
+
+  //for circle progress indicator
   bool isloading = false;
+
+  //
   String groupName = "";
 
+  //instance of the firebase auth sevices
   AuthService authService = AuthService();
 
   @override
@@ -97,21 +107,21 @@ class _HomePageState extends State<HomePage> {
       builder: (context, AsyncSnapshot snapshot) {
         //before returning make some checks
         if (snapshot.hasData) {
-          if (snapshot.data["groups"] != null) {
-            if (snapshot.data["groups"].length != 0) {
-              return ListView.builder(
-                itemCount: snapshot.data["groups"].length,
-                itemBuilder: (context, index) {
-                  int reverseIndex = snapshot.data['groups'].length - index - 1;
-                  return GroupTile(
-                      groueName: getName(snapshot.data["groups"][reverseIndex]),
-                      groupId: getId(snapshot.data["groups"][reverseIndex]),
-                      userName: snapshot.data["fullName"]);
-                },
-              );
-            } else {
-              return noGroupWidget(context);
-            }
+          if (snapshot.data["groups"] != null &&
+              snapshot.data["groups"].length != 0) {
+            return ListView.builder(
+              itemCount: snapshot.data["groups"].length,
+              itemBuilder: (context, index) {
+                int reverseIndex = snapshot.data['groups'].length - index - 1;
+                return GroupTile(
+                  groueName: getName(snapshot.data["groups"][reverseIndex]),
+                  groupId: getId(
+                    snapshot.data["groups"][reverseIndex],
+                  ),
+                  userName: snapshot.data["fullName"],
+                );
+              },
+            );
           } else {
             return noGroupWidget(context);
           }

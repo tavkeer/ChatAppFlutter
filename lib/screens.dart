@@ -17,7 +17,9 @@ export 'package:chat_app_firebase/screens/auth/components/custom_passwordfield.d
 export 'package:chat_app_firebase/screens/auth/components/toggle_registration.dart';
 export 'package:chat_app_firebase/screens/auth/components/custom_button.dart';
 export 'package:chat_app_firebase/screens/auth/components/custom_namefield.dart';
-export 'package:chat_app_firebase/screens/profile_page.dart';
+export 'package:chat_app_firebase/screens/ProfilePage/profile_page.dart';
 export 'package:chat_app_firebase/screens/search_page.dart';
 export 'package:chat_app_firebase/widgets/group_tile.dart';
 export 'package:chat_app_firebase/screens/homePage/components/custom_drawerwidget.dart';
+export 'package:chat_app_firebase/screens/ProfilePage/compenents/body.dart';
+export 'package:chat_app_firebase/screens/ProfilePage/utils/custom_row.dart';
