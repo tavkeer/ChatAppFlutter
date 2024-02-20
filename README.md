@@ -1,4 +1,4 @@
-# chat_app_firebase
+# A Group Chatting Application using Flutter and Firebase
 
 A new Flutter project.
 
